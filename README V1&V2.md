@@ -1,152 +1,298 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
-<a name="readme-top"></a>
+# Webserver
+Developing  my first docker container for a web app .
+## Technologies used include:
+- HTML
+- CSS
+- PHP
+Pre-requisites include:
+- Docker Desktop 
+- IDE(using VS CODE in the project)
+- AWS account(if you prefer to  push image to  AWS ECS)
+## Project creation
+ 1. Create a  new folder to  host  your files in  VS CODE IDE
+ 2. Create a file called "index.html"
+ 3. Create a file called "style.css"
+ 4. Create a file called "verify.php"
+ 5. Create a dockerfile. N/B:Name it  "Dockerfile" .Dockerfiles do not have an extension
 
+## Content of the index file 
 
+```
+<!DOCTYPE html>
+<html lang="en">
 
-<!-- ABOUT THE PROJECT -->
-## About The Project
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sign UP Portal</title>
+	<link rel="stylesheet" href="style.css">
+</head>
 
-This project is a page that displays data from a DynamoDB table
-* Phase 1 - Manual Dynamo Table
-* Phase 2 - Linkage of Dynamo to Webpage 
-* Phase 3 - Using terraform for DynamoDB creation
-* Phase 4 - Deployment of project on dockerhub
+<body>
+	<div class="container">
+		<div class="form-box">
+			<h1>SIGN UP </h1>
+					<form action="verify.php" method="POST">
+						<div class="input-group">
+							<div class="input-field">
+								<input type="text" placeholder="Name" name="username">
 
-* This project forms part of a requirement for the completion of a 6 month cloud professional program with Azubi Africa
-* With the help of the world wide webs rich resources, me and my team were able to research enough on most technologies using documentations and AI assistances like chatGPT to tackle chanllenges 
-* Few challenges:
-1 Linkage of DynamoDB to webpage
-2 Setup of composer and php sdk
-3 Using terraform to upload sample items in database table
+							</div>
+							<div class="input-field">
+								<input type="email" placeholder="Email" name="email">
 
-### Collaborations
-Team members
-I was able to work with:
-1. Paul Timothy Wekesa Wafula [paul.timothy@azubiafrica.org]
-2. Aaron Odeny [aaron.odeny@azubiafrica.org]
-3. Ogunleye Emmanuel [ogunleye.emmanuel@azubiafrica.org]
-7. Kelvin Michuki Mwangi [kelvin.michuki@azubiafrica.org]
-##
-### Project Overview
-```sh
-   Todo and resources
-1. Phase 1 - Dynamo Db: A fully managed NoSQL database service that supports ke-value and document data structures
-2. Phase 2 - AWS SDKs + PhP: Sofware development kits that provide libraries tools for various tools for programming access to AWS servies. We used SDK for php to link our website to dynamo
-3. Phase 3 - Using terraform as a code tool to build dynamoDb platform with initial data
-4. Dockerize application and push to dockerHub
+							</div>
+							<div class="input-field">
+								<input type="tel" placeholder="Phone Number" name="tel">
+
+							</div>
+							<div class="input-field">
+								<input type="password" placeholder="Password" name="password">
+
+							</div>
+							<div class="btn">
+								<input type="submit" class="submit" value="SIGN UP" name="">
+
+							</div>
+						</div>
+
+						
+
+					</form>
+		</div>
+	</div>
+</body>
+
+</html>
 ```
 
-## 
-```sh
-   Task 1: Manual Dynamo Table
+
+
+
+ ## Create an external css file (named style.css)
+ ``` 
+ *{
+    margin :0;
+    padding: 0;
+    font-family: 'poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+.container{
+    width: 100%;
+    height: 100vh;
+    background-image: linear-gradient(rgba(0,0,50,0.8),rgba(0,0,50,0.8) );
+}
+.form-box{
+    width: 90%;
+    max-width: 450px;
+    position: absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding:50px 60px 70px;
+    text-align: center;
+}
+
+.form-box h1{
+    font-size: 30px ;
+    margin-bottom: 60px;
+    color:#3c00a0;
+    position:relative;
+
+}
+.form-box h1::after{
+    content: '';
+    width:30px;
+    height: 4px;
+    border-radius: 3px;
+    background:#3c00a0;
+    position: absolute;
+    bottom: -12px;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+
+.input-field{
+    background: #eaeaea;
+    margin: 15px 0;
+    border-radius: 3px;
+    display:flex;
+    align-items: center;
+
+}
+
+input{
+    width: 100%;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    padding:18px 15px;
+
+}
+
+.input-field i{
+    margin-left: 15px;
+    color: #999;
+}
+.btn{
+    width:100%;
+    display:flex;
+    justify-content: space-between;
+    flex-basis: 48%;
+    background: #3c00a0;
+    height: 40px;
+    border-radius:20px;
+    border:0;
+    outline: 0;
+    transition: .4s;
+    
+}
+.submit{
+    color: #fff;
+    font-size: 20px;
+    padding-top: 10px;
+
+}
+.btn:hover{
+background-color: #999;
+border:#3c00a0;
+cursor: pointer;
+}
+.input-group{
+    height: 280px;
+}
+
+
 ```
-You need to have a an AWS account, you can get a freetire account which basically means you get a free 1 year to use some AWS resources. In our case, we have that setup and we will be using the dynamoDB service
 
-* Go to your AWS Console and navigate to the DynamoDB service. 
-* Click on the "Create table" button. 
-* Enter "GuestBook" as the table name. 
-* Enter "Email" as the primary key and make sure to select "String" as the data type. 
-* Create a Country and Name Fields. You may need to research on (global and local indexes)
-* Click on the "Create" button to create the table. 
-* Once the table is created, click on the "Items" tab to add some sample data to the table.  
-* Click on the "Create item" button and enter the sample data for the "Name", "Email", and "Country" fields. 
-* Populate this with your team members info.
-
-
-##
-```sh
-   Task 2: Link Dynamo to webpage
+##  Create a  simple  php file 
 ```
-We will be working with  a new page Guestlist.php we will use php as it can process the requests in the background. Pick the template for this new file:
-[https://github.com/lawrencemuema/Cloud_project02]
+<?php
 
-**There are some packages needed for us to run the connection to dynamo***
-# Working with AWS SDK for php
+// Hardcoded username and password
+$username = "anyone";
+$password = "password123";
+$email = "anyone@mail.com";
 
-1. Install Composer (https://getcomposer.org/), a package manager for PHP.  
-2. In your project directory, run the “composer require aws/aws-sdk-php". This will install the needed packages. 
-  Git error: Install git from here, https://git-scm.com/download 
-3. Once the AWS SDK for PHP is installed, you can use it in your PHP code by including the Composer-generated autoloader: 
-require 'vendor/autoload.php'; 
-4. You are now able to call on dynamo and perform the desired functions. 
+// Check if the form has been submitted
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-```sh
-   Task 3: Using Terraform
+  // Get the submitted username and password
+  $submittedUsername = $_POST['username'];
+  $submittedPassword = $_POST['password'];
+  $submittedmail = $_POST['email'];
+
+  // Verify the username and password
+  if ($submittedUsername == $username && $submittedPassword == $password && $submittedmail== $email) {
+    // Successful login
+    echo "Welcome, " . $username . "!";
+  } else {
+    // Invalid login
+    echo "Invalid username or password.";
+  }
+}
+
+?>
+
 ```
-To reduce redundancy and complexities we will use terraform to create our dynamo dB table.
-Read: 
-** A terraform file is a configuration file that defines the infrastructure and resources to be created by Terraform.**
 
-#Using Terraform to create dynamo dB
-1. Install Terraform on your local machine following the installation guide for your operating system: 
-Install terraform
-<!-- https://developer.hashicorp.com/terraform/downloads -->
-2. Set up your AWS credentials on your local machine. You can do this by configuring the AWS Command Line Interface (CLI) using the aws configure command. 
-3. Create a new directory/folder on your local machine where you will store your Terraform configuration files.  
-4. Create a new file in your Terraform directory called anything.tf. or any name of your choice
-5. Create a new file in your Terraform directory called anything.tf. 
-6. To create a dynamo dB using a terraform file, you need to: 
- * Define the attributes and settings of the dynamo dB table, such as name, hash key, range key, read capacity, write capacity, etc. 
- * Dummy Data can be added in the same file, different file. But make sure you add the data using terraform.
-7. Dummy Data can be added in the same file, different file. But make sure you add the data using terraform.
-8. Run terraform plan to preview the changes that will be made
-9. Run terraform apply to create the dynamo dB table 
+## To containerize our application ,create a dockerfile
 
-```sh
-   Task 4: Deployment
+Name file *Dockerfile* --skip if named file earlier
+Copy contents below to your dockerfile
+
 ```
-We will work on packaging our application
-#Docker Hub Deployment
-
-1. Create a Dockerfile in the "version3" folder with the following contents: Dockerfiles are what tell docker how it should build your image (environments)  
-2. Build the Docker image using the following command:  
- ** docker build -t your-dockerhub-username/docker-web-app:3.0**
- ** This will build a Docker image with the name "your-dockerhub-username/docker-web-app" and the tag "3.0". **
-3. Push the Docker image to DockerHub using the following command:  
- ** docker push your-dockerhub-username/docker-web-app:3**
+FROM php:7.2-apache
+COPY . /var/www/html/
+```
+##  Build image
+ 1.Open a terminal on your VS  code IDE and navigate to the folder of your surce code 
+ 2.Run  the docker comand as shown below:
+ ![docker build success (2)](https://user-images.githubusercontent.com/30151289/228807174-96db6247-5180-4a98-b4a8-326d8694b185.jpg)
  
-<!-- GETTING STARTED -->
-## Getting Started
+ ```
+ docker build -t  your_image_name .
+ ```
+ 
+ The -t :refers to  tag \
+ dot (.) - : signals that the build context for docker build is the current working directory \
+ 3. A successful built image 
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+![build complete (3)](https://user-images.githubusercontent.com/30151289/228814037-c40716de-5170-4ee0-a0b3-01a2dd414ff3.jpg)
+
+## Run image and create container 
+1. Run command `docker run -dit --name yourcontainername -p(preferred port number):80  your_image_name`
+![build complete (3)](https://user-images.githubusercontent.com/30151289/228814037-c40716de-5170-4ee0-a0b3-01a2dd414ff3.jpg)
+
+2. Check for images by running 
+ `docker images`
+ ![check image  (2)](https://user-images.githubusercontent.com/30151289/228814991-90d0bdfa-cf84-4563-a0e1-bd92bf66fab8.jpg)
+
+ ## confirmation on Docker Desktop
+  ![docker desktop container](https://user-images.githubusercontent.com/30151289/228841112-573eb077-26fb-40fb-9a81-a403162a658c.jpg)
+  
+  
+**Congratulations on first step completion **
+
+## Step 2: Pushing our image to  AWS ECR
+
+### Pre-requisites 
+1. Install AWS CLI \
+[AWS installation](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+
+2.Create  IAM user in your AWS account  and  generate Access  Key ID and secret key
+
+3.Configure your  AWS CLI account \
+[credentials set up in AWS cli](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html) 
+
+4 Install  AWS toolkit in your VS code IDE  and log in 
+(https://docs.aws.amazon.com/toolkit-for-vscode/latest/userguide/connect.html)
+
+5. Log into your  AWS console  and select AWS ECS 
+ 
+6. Create an ECS cluster
+![ecs cluster](https://user-images.githubusercontent.com/30151289/228849604-ff52fef7-2e6d-4d79-9a4d-dab81b040406.jpg) 
+![AWS ECS cluster](https://user-images.githubusercontent.com/30151289/228849676-d59c894e-65ee-40b0-b301-a2d29810274b.jpg) 
+7. Click on AWS ECR to create your public repository
+ ![public repo aws](https://user-images.githubusercontent.com/30151289/228853317-3f9e49e2-faa1-4450-8abc-0f75373fa973.jpg)
+8. After successful repo creation click on *push command* as shown  below
+ ![successful push](https://user-images.githubusercontent.com/30151289/228853296-1fcab76f-ff3f-49eb-a555-cf741fed68d1.jpg)
+ 
+9. On your AWS CLI,if you have already create an image on  your docker desktop   **follow only steps3 and 4 from above**
+
+10. Create a task definition  from from ECS cluster
+ (https://docs.aws.amazon.com/AmazonECS/latest/developerguide/create-task-definition.html)
+ 
+11.Click on task definiton created to obtain public IP(highlighted in red),  click  on *ENI* (in   purple) to edit security group
+  ![public ip](https://user-images.githubusercontent.com/30151289/228863739-95f2d42a-b868-47f7-8910-58cdfdf834cf.jpg)
+ 
+12. Click on secuirty group as shown from the Elastic Network Interface
+   ![select sg](https://user-images.githubusercontent.com/30151289/228863896-3b3017b6-667d-4482-805a-4c2ef2399d9f.jpg) 
+   
+ 13. Edit security as shown:
+   ![edit security](https://user-images.githubusercontent.com/30151289/228863924-f33c9f5a-9e7d-47b8-9166-7d67f403f791.jpg)
+   
+  14.Launch your Public IP  and Voila:
+   
+ ![web success](https://user-images.githubusercontent.com/30151289/228865179-9f6ad945-671d-4208-9537-9ff994667fbe.jpg)
+ 
+ ***Congratulations on launching your web app* **
 
 
-### Installation
-
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-
-1. Clone the repo
-   ```sh
-   git clone https://github.com/Amigo51/docker-web-app.git
-   ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
-<!-- CONTACT -->
-## Contact
+  
+  
 
-Seth Ofori-Amanfo - [@my_twitter](https://twitter.com/@20pesewes) - seth.ofori-amanfo@azubiafrica.org
-
-Project Link: https://github.com/Amigo51/docker-web-app.git]https://github.com/Amigo51/docker-web-app.git)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+ 
 
 
 
-<!-- References -->
-## References
 
-Helpful resources that might help
 
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://github.com/lawrencemuema/Cloud_project02)
-* [Terraform Helpful links](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table)
-* [Terraform Helpful links](https://cloudkatha.com/how-to-create-dynamodb-table-using-terraform/)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+ 
